@@ -1,6 +1,6 @@
 {
   "name": "randomapi",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "some random image things",
   "main": "index.js",
   "scripts": {
