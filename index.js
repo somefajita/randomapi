@@ -15,8 +15,8 @@ class Main {
     VersionIncludes(Version, Route, RootDir) {
         const { readFileSync } = require("fs"),
             version = JSON.parse(readFileSync(`${RootDir}/api/${Version}/index.json`).toString());
-            if(version.routes[Route]) return true;
-            return false;
+        if(version.routes[Route]) return true;
+        return false;
     }
 
     RouteIncludes(Version, Route, Get, RootDir) {
@@ -45,15 +45,15 @@ class Main {
 
     Logger(Message, NoFormat) {
         this._LOGGER_MESSAGE = `[Debug ${(new Date()).toTimeString()}] `.cyan + (NoFormat == true ? Message : this.Format(Message)); // Logging _LOGGER_MESSAGE will cause an infinite loop, so avoid that.
-        console.log(this._LOGGER_MESSAGE);
+        return console.log(this._LOGGER_MESSAGE);
     }
     
     AppListen(cb) {
-        this._APP.listen(this.PORT, cb)
+        return this._APP.listen(this.PORT, cb)
     }
 
     HandleRequest(Type, Route, Handler) {
-        this._APP[Type](Route, Handler);
+        return this._APP[Type](Route, Handler);
     }
 }
 
