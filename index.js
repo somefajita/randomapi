@@ -12,16 +12,16 @@ class Main {
         return false;
     }
 
-    VersionIncludes(Version, Route) {
+    VersionIncludes(Version, Route, RootDir) {
         const { readFileSync } = require("fs"),
-            version = JSON.parse(readFileSync(`./api/${Version}/index.json`).toString());
+            version = JSON.parse(readFileSync(`${RootDir}/api/${Version}/index.json`).toString());
             if(version.routes[Route]) return true;
             return false;
     }
 
-    RouteIncludes(Version, Route, Get) {
+    RouteIncludes(Version, Route, Get, RootDir) {
         const { readFileSync } = require("fs"),
-            version = JSON.parse(readFileSync(`./api/${Version}/index.json`).toString());
+            version = JSON.parse(readFileSync(`${RootDir}/api/${Version}/index.json`).toString());
             if(version.routes[Route])
                 if(version.routes[Route].includes(Get))
                     return true
@@ -57,33 +57,4 @@ class Main {
     }
 }
 
-const App = new Main();
-App.AppListen(App.Logger(App.SERVER_READY));
-// Rearranged for priority.
-
-// Priority 1
-App.HandleRequest("get", "/api/:version/:route/:get", (req, res) => {
-    App.Logger(`Connection Recieved {${req.originalUrl}}`, true);
-    if(App.RouteExists(`/api/${req.params.version}`, __dirname) && App.VersionIncludes(req.params.version, req.params.route))
-        if(req.params.route == "random" && App.RouteIncludes(req.params.version, "random", req.params.get))
-            return res.redirect(App.RandomImage(req.params.version, req.params.get, __dirname), {root:__dirname+"/api"}, 200)
-    return res.sendFile("404.json", {root:__dirname+"/api"});
-})
-
-// Priority 2
-App.HandleRequest("get", "/api/:version/:route/:get/:item", (req, res) => {
-    return res.sendFile(req.originalUrl.substr(5), {root:__dirname+"/api"})
-})
-
-// Priority 3
-App.HandleRequest("get", "/api/:version/", (req, res) => {
-    App.Logger(`Connection Recieved {${req.originalUrl}}`, true);
-    if(App.RouteExists(req.originalUrl, __dirname))
-        return res.sendFile(`${req.params.version}/index.json`, {root:__dirname+"/api"});
-    return res.sendFile("404.json", {root:__dirname+"/api"});
-});
-// Priority 4
-App.HandleRequest("all", "*", (req, res) => {
-    App.Logger(`Connection Recieved {${req.originalUrl}}`, true);
-    return res.sendFile("404.json", {root:__dirname+"/api"});
-})
+module.exports = Main;
