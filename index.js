@@ -22,10 +22,10 @@ class Main {
     RouteIncludes(Version, Route, Get, RootDir) {
         const { readFileSync } = require("fs"),
             version = JSON.parse(readFileSync(`${RootDir}/api/${Version}/index.json`).toString());
-            if(version.routes[Route])
-                if(version.routes[Route].includes(Get))
-                    return true
-            return false;
+        if(version.routes[Route])
+            if(version.routes[Route].includes(Get))
+                return true
+        return false;
     }
 
     RandomImage(Version, Get, RootDir) {
