@@ -1,0 +1,23 @@
+{
+  "name": "randomapi",
+  "version": "1.0.0",
+  "description": "some random image things",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/somefajita/randomapi.git"
+  },
+  "author": "Anime Catgirl // somefajita",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/somefajita/randomapi/issues"
+  },
+  "homepage": "https://github.com/somefajita/randomapi#readme",
+  "dependencies": {
+    "colors": "^1.3.0",
+    "express": "^4.16.3"
+  }
+}
